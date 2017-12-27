@@ -3,10 +3,218 @@
 
 {% block title %}首页{% endblock %}
 {% block head %}
-    <div>
-        <h1>JOBPLUS<h1>
-        <p>阿猫招聘网</P>
+    <!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+
+  <meta charset="utf-8">
+  <title>Bootstrap中文网</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Bootstrap是Twitter推出的一个用于前端开发的开源工具包。它由Twitter的设计师Mark Otto和Jacob Thornton合作开发，是一个CSS/HTML框架。目前，Bootstrap最新版本为3.0 。Bootstrap中文网致力于为广大国内开发者提供详尽的中文文档、代码实例等，助力开发者掌握并使用这一框架。">
+  <meta name="keywords" content="Bootstrap,CSS,CSS框架,CSS framework,javascript,bootcss,bootstrap开发,bootstrap代码,bootstrap入门">
+  <meta name="author" content="Bootstrap中文网">
+  <meta name="robots" content="index,follow">
+  <meta name="application-name" content="bootcss.com">
+  <meta property="qc:admins" content="1603466166416277433363757477167" />
+
+  <!-- Site CSS -->
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://static.bootcss.com/www/assets/css/site.min.css?1513775350233" rel="stylesheet">
+  <style>
+  .job-hot {
+  	position: absolute;
+  	color: #d9534f;
+  	right: 0;
+  	top: 15px;
+  }
+  </style>
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+
+  <![endif]-->
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon-precomposed" href="https://static.bootcss.com/www/assets/ico/apple-touch-icon-precomposed.png?1513775350233">
+  <link rel="shortcut icon" href="https://static.bootcss.com/www/assets/ico/favicon.png?1513775350233">
+
+  <script>
+    var _hmt = _hmt || [];
+  </script>
+
+  <link rel="canonical" href="http://www.bootcss.com/" />
+</head>
+
+<body>
+
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand hidden-sm" href="http://www.bootcss.com" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'navbar-首页'])">Bootstrap中文网</a>
+      </div>
+      <div class="navbar-collapse collapse" role="navigation">
+        <ul class="nav navbar-nav">
+          <li class="hidden-sm hidden-md"><a href="https://v2.bootcss.com/"  target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'v2doc'])">Bootstrap2中文文档</a></li>
+          <li><a href="https://v3.bootcss.com/" target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'v3doc'])">Bootstrap3中文文档</a></li>
+          <li><a href="https://v4.bootcss.com/" target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'v4doc'])">Bootstrap 4.0 预览</a></li>
+          <li><a href="/p/lesscss/" target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'less'])">Less 教程</a></li>
+          <li><a href="https://www.jquery123.com/" target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'jquery'])">jQuery API</a></li>
+          <li><a href="http://www.youzhan.org/" target="_blank" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'youzhan-main-nav'])">网站实例</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right hidden-sm">
+          <li><a href="/about/" onclick="_hmt.push(['_trackEvent', 'navbar', 'click', 'about'])">关于</a></li>
+        </ul>
+      </div>
     </div>
+  </div>
+  <div class="jumbotron masthead">
+    <div class="container">
+      <h1>Bootstrap</h1>
+      <h2>简洁、直观、强悍的前端开发框架，让web开发更迅速、简单。</h2>
+      <p class="masthead-button-links">
+        <a class="btn btn-lg btn-primary btn-shadow" href="https://v3.bootcss.com/" target="_blank" role="button" onclick="_hmt.push(['_trackEvent', 'masthead', 'click', 'masthead-Bootstrap3中文文档'])">Bootstrap3中文文档(v3.3.7)</a>
+      </p>
+    </div>
+  </div>
+  <div class="container projects">
+
+    <div class="projects-header page-header">
+      <h2>Bootstrap相关优质项目推荐</h2>
+      <p>这些项目或者是对Bootstrap进行了有益的补充，或者是基于Bootstrap开发的</p>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-4 col-lg-3 ">
+        <div class="thumbnail">
+          <a href="http://codeguide.bootcss.com" title="Bootstrap 编码规范" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'codeguide'])">
+            <img class="lazy" src="https://static.bootcss.com/www/assets/img/null.png?1513775350233" width="300" height="150" data-src="https://static.bootcss.com/www/assets/img/codeguide.png?1513775350233" alt="Bootstrap 编码规范"></a>
+          <div class="caption">
+            <h3>
+                <a href="http://codeguide.bootcss.com" title="Bootstrap 编码规范" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'codeguide'])">Bootstrap 编码规范<br><small>by @mdo</small></a>
+            </h3>
+            <p>Bootstrap 编码规范：编写灵活、稳定、高质量的 HTML 和 CSS 代码的规范。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-4 col-lg-3 ">
+        <div class="thumbnail">
+          <a href="/p/grumblejs/" title="气泡形状的提示（Tooltip）控件" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'grumblejs'])">
+            <img class="lazy" src="https://static.bootcss.com/www/assets/img/null.png?1513775350233" width="300" height="150" data-src="https://static.bootcss.com/www/assets/img/grumblejs.png?1513775350233" alt="气泡形状的提示（Tooltip）控件">
+          </a>
+          <div class="caption">
+            <h3>
+                <a href="/p/grumblejs/" title="气泡形状的提示（Tooltip）控件" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'grumblejs'])">Grumble.js <br><small>气泡形状的提示（Tooltip）控件</small></a>
+            </h3>
+            <p>一个气泡形状的提示（Tooltip）控件，可以在其围绕的元素周围做360度任意定位。</p>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-4 col-lg-3 ">
+        <div class="thumbnail">
+          <a href="/p/websafecolors/" title="Web 安全色" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'websafecolors'])">
+            <img class="lazy" src="https://static.bootcss.com/www/assets/img/null.png?1513775350233" width="300" height="150" data-src="https://static.bootcss.com/www/assets/img/websafecolors.png?1513775350233" alt="Web 安全色">
+          </a>
+          <div class="caption">
+            <h3>
+                <a href="/p/websafecolors/" title="Web 安全色" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'websafecolors'])">Web Safe Colors <br><small>Web 安全色</small></a>
+            </h3>
+            <p>本表中列出的是 WEB 设计、开发中常用安全色。列于此是为了方便大家参考。</p>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-4 col-lg-3 ">
+        <div class="thumbnail">
+          <a href="/p/font-awesome/" title="Font Awesome" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'fontawesome'])">
+            <img class="lazy" src="https://static.bootcss.com/www/assets/img/null.png?1513775350233" width="300" height="150" data-src="https://static.bootcss.com/www/assets/img/font-awesome.png?1513775350233" alt="Font Awesome">
+          </a>
+          <div class="caption">
+            <h3>
+                <a href="/p/font-awesome/" title="Font Awesome" target="_blank" onclick="_hmt.push(['_trackEvent', 'tile', 'click', 'fontawesome'])">Font Awesome <br><small> Bootstrap 专用图标字体</small></a>
+            </h3>
+            <p>Font Awesome 中包含的所有图标都是矢量的，也就可以任意缩放，避免了一个图标做多种尺寸的麻烦。CSS 对字体可以设置的样式也同样能够运用到这些图标上了。</p>
+          </div>
+        </div>
+    </div>
+
+  </div>
+  <!-- /.container -->
+
+  <footer class="footer ">
+    <div class="container">
+      <div class="row footer-top">
+        <div class="col-sm-6 col-lg-6">
+          <h4>
+            <img src="https://static.bootcss.com/www/assets/img/logo.png?1513775350233">
+          </h4>
+          <p>本网站所列开源项目的中文版文档全部由<a href="http://www.bootcss.com/">Bootstrap中文网</a>成员翻译整理，并全部遵循 <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a>协议发布。</p>
+        </div>
+        <div class="col-sm-6  col-lg-5 col-lg-offset-1">
+          <div class="row about">
+            <div class="col-xs-3">
+              <h4>关于</h4>
+              <ul class="list-unstyled">
+                <li><a href="/about/">关于我们</a></li>
+                <li><a href="/ad/">广告合作</a></li>
+                <li><a href="/links/">友情链接</a></li>
+                <li><a href="/hr/">招聘</a></li>
+              </ul>
+            </div>
+            <div class="col-xs-3">
+              <h4>联系方式</h4>
+              <ul class="list-unstyled">
+                <li><a href="http://weibo.com/bootcss" title="Bootstrap中文网官方微博" target="_blank">新浪微博</a></li>
+                <li><a href="mailto:admin@bootcss.com">电子邮件</a></li>
+              </ul>
+            </div>
+            <div class="col-xs-3">
+              <h4>旗下网站</h4>
+              <ul class="list-unstyled">
+                <li><a href="http://www.golaravel.com/" target="_blank">Laravel中文网</a></li>
+                <li><a href="http://www.ghostchina.com/" target="_blank">Ghost中国</a></li>
+              </ul>
+            </div>
+            <div class="col-xs-3">
+              <h4>赞助商</h4>
+              <ul class="list-unstyled">
+                <li><a href="https://www.upyun.com" target="_blank">又拍云</a></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <hr/>
+      <div class="row footer-bottom">
+        <ul class="list-inline text-center">
+          <li><a href="http://www.miibeian.gov.cn/" target="_blank">京ICP备11008151号</a></li><li>京公网安备11010802014853</li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdn.bootcss.com/unveil/1.3.0/jquery.unveil.min.js"></script>
+  <script src="https://cdn.bootcss.com/scrollup/2.4.1/jquery.scrollUp.min.js"></script>
+  <script src="https://cdn.bootcss.com/toc/0.3.2/toc.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
+  <script src="https://static.bootcss.com/www/assets/js/site.min.js?1513775350233"></script>
+
+</body>
+</html>
+
 {% endblock %}
 
 {% block body %}
