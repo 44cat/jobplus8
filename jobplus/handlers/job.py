@@ -1,6 +1,6 @@
-from flask import Blueprint,render_template,current_app,request,flash,redirect
-from jobplus.models import Job,Dilivery,db
+from flask import Blueprint,render_template,current_app,request,flash,redirect,url_for
 from flask_login import login_required,current_user
+from jobplus.models import Delivery,db,Job
 
 job = Blueprint('job', __name__, url_prefix='/job')
 
@@ -10,7 +10,7 @@ def index():
     pagination = Job.query.order_by(Job.created_at.desc()).paginate(
             page=page,
             per_page=current_app.config['INDEX_PER_PAGE'],
-            error_out=False
+            error_out=False,
             )
     return render_template('job/index.html',pagination=pagination,active='job')
 
@@ -26,7 +26,7 @@ def apply(job_id):
     if job.current_user_is_applied:
         flash('已经投递过改职位','warning')
     else:
-        d = Dilivery(
+        d = Delivery(
                 job_id=job.id,
                 user_id=current_user.id
                 )

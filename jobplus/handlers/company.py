@@ -7,8 +7,10 @@ company = Blueprint('company',__name__,url_prefix='/company')
 
 @company.route('/')
 def index():
-    page = reauest.args.get('page',1,type=int)
-    pagination = User.query.order_by(CompanyDetail.created_at.desc()).paginate(
+    page = request.args.get('page',1,type=int)
+    pagination = User.query.filter(
+        User.role==User.ROLE_COMPANY
+    ).order_by(User.created_at.desc()).paginate(
             page=page,
             per_page=current_app.config['INDEX_PER_PAGE'],
             error_out=False
@@ -30,7 +32,7 @@ def company_jobs(company_id):
     return render_template('company/detial.html',company=company,active='',panel='job')
 
 
-@company.route('/profile',methods=['GET','POST'])
+@company.route('/profile/',methods=['GET','POST'])
 @login_required
 def profile():
     if not current_user.is_company:

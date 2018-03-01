@@ -36,7 +36,7 @@ class RegisterForm(FlaskForm):
 
 
     def create_user(self):
-        user = User(username=self.username.data,
+        user = User(name=self.name.data,
                     email=self.email.data,
                     password=self.password.data)
         db.session.add(user)

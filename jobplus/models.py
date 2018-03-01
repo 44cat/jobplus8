@@ -182,10 +182,10 @@ class Job(Base):
 
     @property
     def current_user_is_applied(self):
-        d = Dilivery.query.filter_by(job_id=self.id,user_id=current_user.id).first()
+        d = Delivery.query.filter_by(job_id=self.id,user_id=current_user.id).first()
         return (d is not None)
 
-class Dilivery(Base):
+class Delivery(Base):
     __tablename__ = 'delivery'
 
     #等待企业审核
