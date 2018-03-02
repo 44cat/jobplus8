@@ -25,23 +25,29 @@ def index():
 @front.route('/userregister', methods=['GET', 'POST'])
 def userregister():
     form = RegisterForm()
-    if form.validate_on_submit():
-        form.create_user()
-        flash('注册成功，请登录！', 'success')
-        return redirect(url_for('.login'))
+    try:
+        if form.validate_on_submit():
+            form.create_user()
+            flash('注册成功，请登录！', 'success')
+            return redirect(url_for('.login'))
+    expect:
+        flash('注册失败,请重新注册','warning')
     return render_template('front/userregister.html', form=form)
 
 # 公司注册页
 @front.route('/companyregister', methods=['GET', 'POST'])
 def companyregister():
     form = RegisterForm()
-    if form.validate_on_submit():
-        company_user = form.create_user()
-        company_user.role = User.ROLE_COMPANY
-        db.session.add(company_user)
-        db.session.commit()
-        flash('注册成功，请登录！', 'success')
-        return redirect(url_for('.login'))
+    try:
+        if form.validate_on_submit():
+            company_user = form.create_user()
+            company_user.role = User.ROLE_COMPANY
+            db.session.add(company_user)
+            db.session.commit()
+            flash('注册成功，请登录！', 'success')
+            return redirect(url_for('.login'))
+        except:
+            flash('注册失败,请重新注册','warning')
     return render_template('front/companyregister.html',form=form)
 
 # 登录页
@@ -56,6 +62,7 @@ def login():
         else:
             login_user(user, form.remember_me.data)
             flash("终于等到你"+form.name.data+"登录","success")
+            return redirect(url_for('front.index'))
         if user.is_admin:
             return redirect(url_for('admin.user'))
         elif user.is_company:
