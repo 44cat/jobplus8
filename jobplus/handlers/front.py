@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 
 front = Blueprint('front', __name__)
 
-
+# 主页
 @front.route('/')
 def index():
     newest_jobs = Job.query.order_by(Job.created_at.desc()).limit(9)
@@ -21,26 +21,7 @@ def index():
             newest_companies=newest_companies,
             )
 
-
-@front.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user.is_disable:
-            flash('该用户已经被禁用')
-            return redirect(url_for('front.login'))
-        else:
-            login_user(user, form.remember_me.data)
-            next = 'user.profile'
-            if user.is_admin:
-                next = 'admin.index'
-            elif user.is_company:
-               next = 'company.profile'
-            return redirect(url_for(next))
-    return render_template('front/login.html', form=form)
-
-
+# 用户注册页
 @front.route('/userregister', methods=['GET', 'POST'])
 def userregister():
     form = RegisterForm()
@@ -50,6 +31,7 @@ def userregister():
         return redirect(url_for('.login'))
     return render_template('front/userregister.html', form=form)
 
+# 公司注册页
 @front.route('/companyregister', methods=['GET', 'POST'])
 def companyregister():
     form = RegisterForm()
@@ -62,7 +44,28 @@ def companyregister():
         return redirect(url_for('.login'))
     return render_template('front/companyregister.html',form=form)
 
+# 登录页
+@front.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user.is_disable:
+            flash('该用户已经被禁用',"Danger")
+            return redirect(url_for('front.login',form=form))
+        else:
+            login_user(user, form.remember_me.data)
+            flash("终于等到你"+form.name.data+"登录","success")
+        if user.is_admin:
+            return redirect(url_for('admin.user'))
+        elif user.is_company:
+            return redirect(url_for('company.profile'))
+        else:
+            return redirect(url_for('user.profile'))
+    else:
+        return render_template('front/login.html', form=form)
 
+# 退出页
 @front.route('/logout')
 @login_required
 def logout():
