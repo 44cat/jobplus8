@@ -18,7 +18,7 @@ git clone https://www.shiyanlou.com/LouPlus/jobplus8.git
 ```
 
 1.进入jobplus8主目录后,添加并修改/etc/mysql/my.cnf(添加在对应底部即可),将mysql编码设置为utf8:
-$ vim /etc/mysql/my.cnf
+$ sudo vim /etc/mysql/my.cnf
 ```
 [client]
 default-character-set = utf8
