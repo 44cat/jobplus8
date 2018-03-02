@@ -24,7 +24,7 @@ $ sudo vim /etc/mysql/my.cnf
 default-character-set = utf8
 
 [mysqld]
-character-setserver = utf8
+character-set-server = utf8
 
 [mysql]
 default-character-set = utf8
