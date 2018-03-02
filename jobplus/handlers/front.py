@@ -30,7 +30,7 @@ def userregister():
             form.create_user()
             flash('注册成功，请登录！', 'success')
             return redirect(url_for('.login'))
-    expect:
+    except:
         flash('注册失败,请重新注册','warning')
     return render_template('front/userregister.html', form=form)
 
@@ -46,8 +46,8 @@ def companyregister():
             db.session.commit()
             flash('注册成功，请登录！', 'success')
             return redirect(url_for('.login'))
-        except:
-            flash('注册失败,请重新注册','warning')
+    except:
+        flash('注册失败,请重新注册','warning')
     return render_template('front/companyregister.html',form=form)
 
 # 登录页

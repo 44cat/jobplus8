@@ -2,11 +2,11 @@ from flask import Blueprint,render_template,current_app,request,flash,redirect,u
 from flask_login import current_user,login_required,login_user,logout_user
 from jobplus.models import Delivery,db,Job
 
-job = Blueprint('job', __name__, url_prefix='/job')
+job = Blueprint('job', __name__, url_prefix='/jobs')
 
 # 职位列表页
 @job.route('/')
-def job_index():
+def index():
     page = request.args.get('page',default=1,type=int)
     
     jobs = Job.query.order_by(Job.created_at.desc()).paginate(
