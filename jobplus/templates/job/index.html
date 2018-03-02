@@ -8,105 +8,50 @@
         <div class="desc">
             <h1>JOBPLUS<h1>
             <p>阿猫招聘网</P>
-        </div>
-        
+        </div>    
     </div>
 {% endblock %}
 
 {% block body %}
-<div class="jumbotron">
-    <h1>Todo:公司过滤</h4>
-</h4>
-
-<div class="job-list">
-    {% for job in pagination.items %}
-        {{ render_job(job) }}
-    {% endfor %}
-</div>
-
 <div class="job-list-wrap">
     <div class="job-list-title">
         <span class="title">最新职位</span>
     </div>
     <div class="job-list-content">
         <div class="row">
+            {% for job in pagination.items %}
+            <div class="thumbnail">
+                <div class="caption">
+                    <a href="{{ job.url }}" target="_blank">          
+                    </a>
+                </div>
+            </div>
             <div class="col-sm-6">
                 <div class="job-list-item">
-                    <a href="" class="job-name">高级前端工程师</a>
-                    <span class="job-location">[上海]</span>
-                    <div class="job-attributes">
-                        <span class="job-salary">8k-10k</span>
-                        <span class="job-separator">/</span>
+                    <h4 class="job_name">{{ job.name }}</h4>
+                    <span class="job-location">{{ job.location }}</span>
+                    <div class="text-muted job-require">
+                        <strong class="job_wage">
+                            {{ job.wage }}
+                        </strong>
+                        <span class="job_require">{{ job.requirement }}</span>
                         <span class="job-experience">经验3-5年</span>
                         <span class="job-separator">/</span>
                         <span class="job-education">本科及以上</span>
                     </div>
                     <div class="job-post">
-                        <a href="" class="job-company">阿里巴巴</a>
+                        <a href="{{ job.company_url }}" target="_blank">
+                            <h6 class="company_name">{{ job.company.user.name }}阿里巴巴</h6>
+                        </a>
                         <span class="job-separator">-</span>
                         <span class="job-time-ago">2天前</span>
                     </div>
                 </div>
-                
             </div>
-
-            <div class="col-sm-6">
-                <div class="job-list-item">
-                    <a href="" class="job-name">高级前端工程师</a>
-                    <span class="job-location">[上海]</span>
-                    <div class="job-attributes">
-                        <span class="job-salary">8k-10k</span>
-                        <span class="job-separator">/</span>
-                        <span class="job-experience">经验3-5年</span>
-                        <span class="job-separator">/</span>
-                        <span class="job-education">本科及以上</span>
-                    </div>
-                    <div class="job-post">
-                        <a href="" class="job-company">阿里巴巴</a>
-                        <span class="job-separator">-</span>
-                        <span class="job-time-ago">2天前</span>
-                    </div>
-                </div>
-            
-            </div>
-        </div>
-    </div>
-    <div class="job-list-footer clearfix">
-        <div class="more pull-right">
-            <a href="">更多职位</a>
-        </div>
+            {% endfor %}   
+        </div>    
     </div>
 </div>
-
-<div class="company-list-wrap">
-    <div class="company-list-title">
-        <span class="title">最新企业</span>
-    </div>
-
-    <div class="company-list-content">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="company-list-item">
-                    kkkkkkkk
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="company-list-item">
-                    kkkkkkkk
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-    <div class="company-list-footer clearfix">
-        <div class="more pull-right">
-            <a href="">更多企业</a>
-        </div>
-    </div>
-</div>
-
 {{ render_pagination(pagination,'job.index') }}
 {% endblock %}
 
