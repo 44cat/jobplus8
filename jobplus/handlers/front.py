@@ -64,7 +64,7 @@ def login():
 #            lash("终于等到你"+form.name.data+"登录","success")
 #            return redirect(url_for('front.index'))
         login_user(user, form.remember_me.data)
-        flash("终于等到你"+ form.name.data+"登录","success")
+        flash("终于等到"+ form.name.data+"你光临啦","success")
         return redirect(url_for('front.index'))
         
         if user.is_admin:

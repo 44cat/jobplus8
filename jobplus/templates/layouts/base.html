@@ -18,21 +18,6 @@
       {% block head %}{% endblock %}
       
       <div class="container">
-          <script>
-            function showPower(target,message) {
-                target.attr("data-original-title",message);
-                $('[data-toggle="tooltip"]'.tooltip)
-                target.foucs():
-                    //2second disappear
-                var id = setTimeout(
-                        function () {
-                            target.attr("data-original-title","");
-                            target.tooltip('hide');
-                        },2000
-                );
-            }
-          showPower($("#tableName","ÒÑ´æÔÚ"))  
-          </script>
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
               {% for category, message in messages %}
@@ -49,7 +34,7 @@
 
         <div class="footer">
             <div class="text-center copyright">
-                Copyright Â© 2017 By Flask
+                Copyright  2017 By Flask
             </div>
         </div>
 
