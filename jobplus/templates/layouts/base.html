@@ -18,6 +18,31 @@
       {% block head %}{% endblock %}
       
       <div class="container">
+          <script>
+            function showPower(target,message) {
+                target.attr("data-original-title",message);
+                $('[data-toggle="tooltip"]'.tooltip)
+                target.foucs():
+                    //2second disappear
+                var id = setTimeout(
+                        function () {
+                            target.attr("data-original-title","");
+                            target.tooltip('hide');
+                        },2000
+                );
+            }
+          showPower($("#tableName","ÒÑ´æÔÚ"))  
+          </script>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class='alert alert-{{ category }} alter-dismissable' role='alert'>
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+                {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
         {% block body %}{% endblock %}
 
       </div>

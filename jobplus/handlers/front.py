@@ -55,14 +55,18 @@ def companyregister():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user.is_disable:
-            flash('该用户已经被禁用',"Danger")
-            return redirect(url_for('front.login',form=form))
-        else:
-            login_user(user, form.remember_me.data)
-            flash("终于等到你"+form.name.data+"登录","success")
-            return redirect(url_for('front.index'))
+        user = User.query.filter_by(name=form.name.data).first()
+#        if user.is_disable:
+#            flash('该用户已经被禁用',"Danger")
+#            return redirect(url_for('front.login',form=form))
+#        else:
+#            login_user(user, form.remember_me.data)
+#            lash("终于等到你"+form.name.data+"登录","success")
+#            return redirect(url_for('front.index'))
+        login_user(user, form.remember_me.data)
+        flash("终于等到你"+ form.name.data+"登录","success")
+        return redirect(url_for('front.index'))
+        
         if user.is_admin:
             return redirect(url_for('admin.user'))
         elif user.is_company:

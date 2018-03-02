@@ -5,17 +5,17 @@ from jobplus.models import db, User, CompanyDetail
 
 
 class LoginForm(FlaskForm):
-    email = StringField('邮箱', validators=[Required(), Email()])
+    name = StringField('用户名',validators=[Required(),Length(3,24)])
     password = PasswordField('密码', validators=[Required(), Length(6, 24)])
     remember_me = BooleanField('记住我')
     submit = SubmitField('提交') 
 
-    def validate_email(self, field):
-        if field.data and not User.query.filter_by(email=field.data).first():
-            raise ValidationError('该邮箱未注册')
+    def validate_name(self, field):
+        if field.data and not User.query.filter_by(name=field.data).first():
+            raise ValidationError('该用户名不存在')
 
     def validate_password(self, field):
-        user = User.query.filter_by(email=self.email.data).first()
+        user = User.query.filter_by(name=self.name.data).first()
         if user and not user.check_password(field.data):
             raise ValidationError('密码错误')
 
