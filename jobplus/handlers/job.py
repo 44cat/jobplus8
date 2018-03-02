@@ -14,7 +14,7 @@ def job_index():
             per_page=current_app.config['INDEX_PER_PAGE'],
             error_out=False,
             )
-    return render_template('job/job.html',pagination=jobs,active='job')
+    return render_template('job/index.html',pagination=jobs,active='job')
 
 # 职位详情页
 @job.route('/<int:job_id>/')
