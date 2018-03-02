@@ -51,7 +51,7 @@ $ export FLASK_DEBUG=1
 ```
 $ flask db init
 $ flask db migrate -m "init database"
-**数据库数据更新$ flask db upgrade**
+数据库数据更新：$ flask db upgrade
 ```
 7.启动应用，并打开链接即可
 
