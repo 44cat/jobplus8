@@ -9,15 +9,17 @@
     <div class="container">
         <div class="col-md-8">
             <h2>{{ job.name }}</h2>
-            <p><span class="job-salary">{{ job.salary_low }}-{{ job.salary_high }}</span>experience{{ job.experience_requirement }} {% if job.experience_requirement != '²»ÏŞ'%}Äê{% endif %}Ñ§Àú{{ job.degree_requirement }}</p>
+            <p><span class="job-salary">{{ job.salary_low }}-{{ job.salary_high }}</span>experience{{ job.experience_requirement }} {% if job.experience_requirement != 'ä¸é™'%}å¹´{% endif %}å­¦å†{{ job.degree_requirement }}</p>
         </div>
         <div class="col-md-4">
             {% if current_user.is_authenticated %}
                 {% if not job.current_user_is_applied %}
-                    <a href="{{ url_for('job.apply',job_id=job.id) }}" class="btn btn-success btn-ig dilivery-btn">Í¶µİ¼òÀú</a>
+                    <a href="{{ url_for('job.apply',job_id=job.id) }}" class="btn btn-success btn-ig dilivery-btn" role="button">æŠ•é€’ç®€å†</a>
                 {% else %}
-                    <a href="#" class="btn btn-success btn-lg dilivery-btn" disabled="disabled">ÒÑÍ¶µİ</a>
+                    <a href="#" class="btn btn-primary" role="button" disabled="disabled">å·²æŠ•é€’</a>
                 {% endif %}
+            {% else %}
+                <a href="{{ job.login }}" target="_blank" class="btn btn-success" role="button">æŠ•é€’ç®€å†</a>
             {% endif %}
         </div>
     </div>
@@ -27,10 +29,13 @@
 {% block body %}
 <div class="col-md-8">
     <div class="job-detail">
-        <h3>Ö°Î»±êÇ©</h3> <br>
+        <h3>èŒä½æ ‡ç­¾</h3> <br>
         <p>{{ job.tags }}</p>
         <br>
-        <h3>Ö°Î»ÃèÊö</h3 ><br>
+        <h3>èŒä½è¦æ±‚</h3> <br>
+        <p>{{ job.requirement }}</p>
+        <br>
+        <h3>èŒä½æè¿°</h3 ><br>
         <p>{{ job.description }}</p>
     </div>
 </div>
@@ -46,9 +51,9 @@
 </div>
 
 <h4>{{ job.company.name }}</h4>
-<p>ÁìÓò:{{ job.company.detail.field }}</p>
-<p>ÈÚ×Ê:{{ job.company.finance_stage }}</p>
-<p>³ÇÊĞ:{{ job.company.detail.location }}</p>
+<p>é¢†åŸŸ:{{ job.company.detail.field }}</p>
+<p>èèµ„:{{ job.company.finance_stage }}</p>
+<p>åŸå¸‚:{{ job.company.detail.location }}</p>
 </div>
 {% endblock %}
 
