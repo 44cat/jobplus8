@@ -5,15 +5,12 @@
 
 {% block head %}
     <div class="header-poster">
-        <div class=desc">
-            <h1>JOBPLUS</h1>
-            <p>miao JOB</p>
-        </div>
+        <div class=desc"><h1>JOBPLUS</h1></div>
     </div>
 {% endblock %}
 
 {% block body %}
-<h4>编辑企业信息</h4>
+<h4>管理企业信息</h4>
 {{ render_form(form,url_for('company.profile')) }}
 {% endblock %}
 

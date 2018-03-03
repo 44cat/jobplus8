@@ -3,33 +3,55 @@ from flask_login import login_required,current_user
 from jobplus.forms import CompanyProfileFrom
 from jobplus.models import User
 
-company = Blueprint('company',__name__,url_prefix='/company')
+company = Blueprint('company',__name__,url_prefix='/companies')
 
+# 企业列表
 @company.route('/')
-def index():
+def companyindex():
     page = request.args.get('page',1,type=int)
-    pagination = User.query.filter(
-        User.role==User.ROLE_COMPANY
-    ).order_by(User.created_at.desc()).paginate(
+    company = Company.query.paginate(
             page=page,
             per_page=current_app.config['INDEX_PER_PAGE'],
             error_out=False
             )
-    return render_template('company/index.html',pagination=pagination,active='company')
+    return render_template('company/company.html',pagination=pagination,active='company')
 
+# 企业详情
 @company.route('/<int:company_id>')
 def detial(company_id):
     company = User.query.get_or_404(company_id)
+    jobs = Job.query.filter_by(company_id=company_id)
     if not company.is_company:
         abort(404)
-    return render_template('company/detial.html',company=company,active='',panel='about')
+    return render_template('company/detial.html',company=company,jobs=jobs,active='',panel='about')
+
+# 企业管理页
+@company.route('/admin')
+@company_required
+def admin_base():
+    return render_template('company/admin_base.html')
+
+# 职位管理页
+@company.route('/admin/<int:company_id>')
+@company_required
+def admin_index(company_id):
+    if not current_user.company.id == company_id:
+        abort(404)
+    page = request.args.get('page',default=1,type=int)
+    pagination = Job.query.filter_by(company_id=company_id).paginate(
+            page=page,
+            per_page=current_app.config['ADMIN_PER_PAGE'],
+            error_out=False
+            )
+    return render_template('company/admin_index.html',company_id=company_id,pagination=pagination)
+
 
 @company.route('/<int:company_id>/jobs')
 def company_jobs(company_id):
     company = User.query.get_or_404(company_id)
     if not company.is_company:
         abort(404)
-    return render_template('company/detial.html',company=company,active='',panel='job')
+    return render_template('company/detial.html',company=company,panel='job')
 
 
 @company.route('/profile/',methods=['GET','POST'])

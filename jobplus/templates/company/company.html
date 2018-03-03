@@ -1,0 +1,59 @@
+{% extends "layouts/base.html" %}
+{% from "macros.html" import render_pagination %}
+
+{% block title %}企业列表{% endblock %}
+{% block body %}
+    <h2 class="h4 mt40 company-list-title">企业列表</h2>
+    <br>
+<div class="row">
+    {% for company i pagination.items %}
+    <div class="col-sm-12 job-list-item-block">
+        <div class="thumbnail">
+            <div class="caption">
+                <div class="company-log">
+                    <img src="{{ (company.user.logo_img[1:]) }}" alt="...">
+                </div>
+                <div class="media-body" style="padding-left:12px;">
+                    <a href="{{ company.url }}" target="_blank"><h4 class="company_name">{{ company.user.name }}</h4></a>
+                    <a href="{{ company.website }}" target="_blank"><h4 class="company_name">{{ company.website }}</h4></a>
+                    <p class="company_location">{{ company.user.employee.location }}</p>
+                    <div class="text-muted job-require"><span class="company_oneword">{{ company.oneword }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<style type="text/css">
+    company_name{
+        color:black;
+        font-size:18px;
+    }
+    h4 {
+        font-weight:bold;
+    }
+    .company-list-title{
+        padding-bottom:10px;
+        color:black;
+        border-bottom:1px solid #606666;
+        margin-bottom:0;
+        font-size:18px;
+    }
+    .caption{
+        text-overflow:ellipsis;
+        overflow:hidden;
+        width:100px;
+        border-radius:3px;
+        border:1px solid #dddddd;
+        margin-right:20px;
+    }
+    .company_website{
+        color:green;
+    }
+</style>
+{{ render_pagination(pagination,'company.company_index') }}
+{% endblock %}
+                    
+
+
