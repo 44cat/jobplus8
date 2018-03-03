@@ -25,15 +25,11 @@
 
             {% if current_user.is_authenticated and current_user.is_admin %}
                 <li class="{% if active == 'admin' %}active{% endif %}">
-                    <a href="{{ url_for('admin.index') }}">控制台</a>
-            </li>
-            {% endif %}
-            
-            {% if current_user.is_authenticated and current_user.is_company %}{% endif %}
+                    <a href="{{ url_for('admin.index') }}">控制台</a></li>
+            {% elif current_user.is_authenticated and current_user.is_company %}
                 <li class="{% if active == 'admin' %}active{% endif %}">
-                    <a href="{{ url_for('front.index', company_id=current_user.id) }}">企业管理</a>
-                </li>
-            
+                    <a href="{{ url_for('company.admin_base', company_id=current_user.id) }}">企业管理</a></li>
+            {% endif %}
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
@@ -43,9 +39,14 @@
             <li><a href="{{ url_for('front.login') }}">登录</a></li>
           {% else %}
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> current_user.name <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ current_user.name }}<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="#">个人主页</a></li>
+                {{% if current_user.is_admin %}}
+                <li><a href="{{ url_for('user.admin_profile') }}">管理员资料配置</a></li>
+                {{% elif current_user.is_company %}}
+                <li><a href="{{ url_for('user.company_profile') }}">企业资料配置</a></li>
+                {{% else %}}
+                <li><a href="{{ url_for('user.user_profile') }}">用户资料配置</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="{{ url_for('front.logout') }}">退出登录</a></li>
             </ul>
