@@ -1,7 +1,8 @@
 from flask import Blueprint,render_template,flash,redirect,url_for,current_app,request,abort
-from flask_login import login_required,current_user
-from jobplus.forms import CompanyProfileFrom
-from jobplus.models import User
+from flask_login import login_required,current_user,login_user,logout_user
+from jobplus.forms import CompanyProfileFrom,JobForm
+from jobplus.models import User,Company,Job,db,Delivery
+from jobplus.decorators import company_required
 
 company = Blueprint('company',__name__,url_prefix='/companies')
 

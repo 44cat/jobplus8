@@ -31,6 +31,7 @@ class User(Base, UserMixin):
     name = db.Column(db.String(32), unique=True, index=True, nullable=False)
     email = db.Column(db.String(64), unique=True, index=True, nullable=False)
     _password = db.Column('password', db.String(256), nullable=False)
+    logo_img = db.Column(db.String(128))
     real_name = db.Column(db.String(32))
     phone = db.Column(db.String(32))
     work_years = db.Column(db.SmallInteger)
@@ -69,20 +70,22 @@ class User(Base, UserMixin):
     def is_staff(self):
         return self.role == self.ROLE_STAFF
 
+import enum
+class SexType(enum.Enum):
+    NONE = 0
+    MALE = 1
+    FEMALE = 2
 
-class Resume(Base):
-    __tablename__ = 'resume'
+class employee(Base):
+    __tablename__ = 'employee'
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer,db.ForeignKey('user.id'))
+    sex = db.Column(db.Enum(SexType),default=SexType.NONE)
+    location = db.Column(db.String(128))
     user = db.relationship('User',uselist=False)
-    job_experiences = db.relationship('JobExperience')
-    edu_experiences = db.relationship('EduExperience')
-    project_experiences = db.relationship('ProjectExperience')
-
-    def profile(self):
-        pass
-
+    description = db.Column(db.String(256))
+    resume = db.Column(db.String(128))
 
 class Experience(Base):
     __abstract__ = True
@@ -122,22 +125,19 @@ class ProjectExperience(Experience):
     resume_id = db.Column(db.Integer, db.ForeignKey('resume.id'))
     resume = db.relationship('Resume', uselist=False)
 
-class CompanyDetail(Base):
-    __tablename__ = 'comapny_detail'
+class Company(Base):
+    __tablename__ = 'comapny'
 
     id = db.Column(db.Integer,primary_key=True)
-    slug = db.Column(db.String(32), nullable=False,index=True,unique=True)
-    logo = db.Column(db.String(64), nullable=False)
-    site = db.Column(db.String(64), nullable=False)
-    location = db.Column(db.String(32), nullable=False)
+    user_id = db.Column(db.Integer,db.ForeginKey('user.id'),index=True)
+    user = db.relationship('User',uselist=False)
+    website = db.Column(db.String(64))
     #一句话描述
-    description = db.Column(db.String(128))
+    oneword = db.Column(db.String(128))
     #关于我们，公司详情描述
-    about = db.Column(db.String(128))
+    description = db.Column(db.String(256))
     #公司技术栈,多个用逗号隔开,最多10个
     stack = db.Column(db.String(128))
-    #公司标签,多个用逗号隔开,最多10个
-    tags = db.Column(db.String(128))
     #团队介绍
     team_introduction = db.Column(db.String(256))
     #公司福利
@@ -146,61 +146,62 @@ class CompanyDetail(Base):
     field = db.Column(db.String(256))
     #融资进度
     finance_stage = db.Column(db.String(128))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id',ondelete='SET NULL'))
-    user = db.relationship('User', uselist=False,backref=db.backref('comapny_detail',uselist=False))
 
-    def __repr__(self):
-        return '<CompanyDetail {}>'.format(self.id)
+    @property
+    def url(self):
+        return url_for('company.detail',company_id=self.id)
 
 class Job(Base):
     __tablename__ = 'job'
     
     id = db.Column(db.Integer,primary_key=True)
     #职位名称
-    name = db.Column(db.String(32))
-    salary_low = db.Column(db.Integer, nullable=False)
-    salary_high = db.Column(db.Integer, nullable=False)
-    location = db.Column(db.String(32))
-    description = db.Column(db.String(1500))
-    #职位标签,多个标签用逗号隔开,最多10个
-    tags = db.Column(db.String(128))
-    experience_requirement = db.Column(db.String(32))
-    degree_requirement = db.Column(db.String(32))
-    is_fulltime = db.Column(db.Boolean,default=True)
-    #是否在招聘
-    is_open = db.Column(db.Boolean,default=True)
-    company_id = db.Column(db.Integer,db.ForeignKey('user.id',ondelete='CASCADE'))
-    company = db.relationship('User', uselist=False)
-    views_count = db.Column(db.Integer,default=0)
-
-    def __repr__(self):
-        return '<Job {}>'.format(self.name)
+    name = db.Column(db.String(64))
+    wage = db.Column(db.String(64))
+    location = db.Column(db.String(64))
+    description = db.Column(db.String(256))
+    company_id = db.Column(db.Integer,db.ForeignKey('company.id',ondelete='CASCADE'))
+    company = db.relationship('Company', uselist=False)
+    requirement = db.Column(db.String(256))
+    is_disable = db.Column(db.Boolean,default=False)
 
     @property
-    def tag_list(list):
-        return self.tags.split(',')
+    def url(self):
+        return url_for('job.detail',job_id = self.id)
+
+    @property
+    def apply(self):
+        return url_for('job.apply',job_id = self.id)
+
+    @property
+    def login(self):
+        return url_for('front.login',job_id = self.id)
 
     @property
     def current_user_is_applied(self):
         d = Delivery.query.filter_by(job_id=self.id,user_id=current_user.id).first()
         return (d is not None)
 
+class Qualify_Type(enum.Enum):
+    UNREAD = 0
+    READ = 1
+    REFUSE = 2
+    ACCEPT =3
+
 class Delivery(Base):
     __tablename__ = 'delivery'
-
-    #等待企业审核
-    STATUS_WAITING = 1
-    #被拒绝
-    STATUS_REJECT = 2
-    #被接受,等待面试通知
-    STATUS_ACCEPT = 3
 
     id = db.Column(db.Integer,primary_key=True)
     job_id = db.Column(db.Integer, db.ForeignKey('job.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    status = db.Column(db.SmallInteger,default=STATUS_WAITING)
+    company_id = db.Column(db.Integer, db.ForeignKey('company.id'))
+    user = db.relationship("User")
+    resume_id = db.Column(db.Integer,db.ForeginKey('employee.id'))
+    resume = db.relationship('Employee')
+    job = db.relationship('Job')
+    
     #企业回应
-    response = db.Column(db.String(256))
+    qualify = db.Column(db.Enum(Qualify_Type),default = Qualify_Type.UNREAD)
 
 
     
