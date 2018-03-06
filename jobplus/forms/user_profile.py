@@ -1,144 +1,55 @@
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, ValidationError, TextAreaField, IntegerField
-from wtforms.validators import Length, Email, EqualTo, Required, URL, NumberRange
-from jobplus.models import db, User, CompanyDetail
+from .base import *
+from jobplus.models import db,User,Employee,Company
 
-
-class LoginForm(FlaskForm):
-    name = StringField('用户名',validators=[Required(),Length(3,24)])
-    password = PasswordField('密码', validators=[Required(), Length(6, 24)])
-    remember_me = BooleanField('记住我')
-    submit = SubmitField('提交') 
-
-    def validate_name(self, field):
-        if field.data and not User.query.filter_by(name=field.data).first():
-            raise ValidationError('该用户名不存在')
-
-    def validate_password(self, field):
-        user = User.query.filter_by(name=self.name.data).first()
-        if user and not user.check_password(field.data):
-            raise ValidationError('密码错误')
-
-class RegisterForm(FlaskForm):
-    name = StringField('用户名', validators=[Required(), Length(3, 24)])
-    email = StringField('邮箱', validators=[Required(), Email()])
-    password = PasswordField('密码', validators=[Required(), Length(6, 24)])
-    repeat_password = PasswordField('重复密码', validators=[Required(), EqualTo('password')])
-    submit = SubmitField('提交') 
-
-    def validate_username(self, field):
-        if User.query.filter_by(username=field.data).first():
-            raise ValidationError('用户名已经存在')
-
-    def validate_email(self, field):
-        if User.query.filter_by(email=field.data).first():
-            raise ValidationError('邮箱已经存在')
-
-
-    def create_user(self):
-        user = User(name=self.name.data,
-                    email=self.email.data,
-                    password=self.password.data)
-        db.session.add(user)
-        db.session.commit()
-        return user
-
-
-class UserProfileForm(FlaskForm):
-    real_name = StringField('姓名')
-    email = StringField('邮箱',validators=[Required(),Email()])
-    password = PasswordField('密码(不填写保持不变)')
-    phone = StringField('手机号')
-    work_years = IntegerField('工作年限')
-    resume_url = StringField('简历地址链接')
+class UserProfile(FlaskForm):
+    name = StringField('求职者名称',validators=[Required(),Length(2,24)])
+    email = StringField('邮箱',validators=[Required(),Email(message='请输入合法email地址')])
+    password = PasswordField('密码(不填写保持不变)',validators=[Required()])
+    image = StringField('头像链接')
+    location = StringField('城市',validators=[Required()])
+    sex = StringField('性别',validators=[Required(),choices=[('MALE','男性',('FEMALE','女性')]])
+    description = TextAreaField('个人介绍',validators=[Length(10,1024)])
+    resume = StringField('简历地址')
     submit = SubmitField('提交')
 
-    def validate_phone(self, field):
-        phone = field.data
-        if phone[:2] not in ('13','15','18') and len(phone) != 11:
-            raise ValidationError('无效的手机号，请重新输入')
-
-    def updated_profile(self,user):
-        user.real_name = self.real_name.data
-        user.email = self.email.data
-        
-        if self.password.data:
-            user.password = self.password.data
-        user.phone = self.phone.data
-        user.work_years = self.work_years.data
-        user.resume_url = self.resume_url.data
-        db.session.add(user)
-        db.session.commit()
-
-class CompanyProfileFrom(FlaskForm):
-    name = StringField('企业名称')
-    email = StringField('邮箱',validators=[Required(),Email()])
-    password = PasswordField('密码(不填写保持不变)')
-    slug = StringField('Slug',validators=[Length(3,24)])
-    location = StringField('地址',validators=[Length(0,64)])
-    site = StringField('公司网址',validators=[Length(0,64)])
-    logo = StringField('Logo')
-    description = StringField('一句话描述',validators=[Length(0,128)])
-    about = TextAreaField('公司详情',validators=[Length(0,1024)])
-    submit = SubmitField('提交')
-
-    def validate_phone(self, field):
-        phone = field.data
-        if phone[:2] not in ('13','15','18') and len(phone) != 11:
-            raise ValidationError('无效的手机号，请重新输入')
-
-    def updated_profile(self, user):
+    def updata_profile(self,user):
+        #添加用户普通信息
         user.name = self.name.data
         user.email = self.email.data
-        if self.password.data:
-            user.password = self.password.data
-        if user.company_detail:
-            company_detail = user.company_detail
-        else:
-            company_detail = CompanyDetail()
-            company_detail.user_id = user.id
-        self.populate_obj(company_detail)
+        user.password = self.password.data
+        user.logo_img = self.image.data
         db.session.add(user)
-        db.session.add(company_detail)
+        employee = user.employee
+        employee.sex = self.sex.data
+        employee.location = self.location.data
+        employee.resume = self.resume.data
+        employee.description = self.description.data
+        db.session.add(employee)
         db.session.commit()
 
-class UserEditForm(FlaskForm):
-    email = StringField('邮箱',validators=[Required(),Email()])
-    password = PasswordField('密码')
-    real_name = StringField('姓名')
-    phone = StringField('手机号')
+class CompanyProfile(FlaskForm):
+    name = StringField('企业名称',validators=[Required(),Length(2,24)])
+    email = StringField('邮箱', validators=[Required(), Email(message='请输入合法email地址')])
+    password = PasswordField('密码(不填写保持不变)',validators=[Required()])
+    image = StringField('头像链接')
+    oneword = StringField('一句话介绍',validators=[Required()])
+    description = TextAreaField('企业介绍',validators=[Length(10,1024)])
     submit = SubmitField('提交')
 
-    def update(self,user):
-        self.populate_obj(user)
-        if self.password.data:
-            user.password = self.password.data
-        db.session.add(user)
-        db.session.commit()
-
-class CompanyEditForm(FlaskForm):
-    name = StringField('企业名称')
-    email = StringField('邮箱', validators=[Required(), Email()])
-    password = PasswordField('密码')
-    phone = StringField('手机号')
-    site = StringField('公司网站',validators=[Length(0,64)])
-    description = StringField('一句话简介',validators=[Length(0,128)])
-    submit = SubmitField('提交')
-
-    def update(self,company):
+    def updateprofile(self,company):
+        # 修改企业用户信息
         company.name = self.name.data
         company.email = self.email.data
         if self.password.data:
             company.password = self.password.data
-        if company.detial:
-            detial = company.detial
+        if company.user_detail:
+            user_detail = company.user_detail
         else:
-            detial = CompanyDetial()
-            detialuser_id = company.id
-        detial.site = site.site.data
-        detial.description = description.data
+            user_detail = Employee()
+            user_detail.user_id = company.id
+        self.populate_obj(user_detail)
+        db.session.add(user_detail)
         db.session.add(company)
-        db.session.add(detial)
         db.session.commit()
 
 
