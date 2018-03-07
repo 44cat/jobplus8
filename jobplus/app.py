@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_migrate import Migrate
-
 from jobplus.config import configs
 from jobplus.models import db,User
 from .handlers import register_blueprints, register_errors

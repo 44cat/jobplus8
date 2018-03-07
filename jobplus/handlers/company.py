@@ -1,14 +1,14 @@
 from flask import Blueprint,render_template,flash,redirect,url_for,current_app,request,abort
 from flask_login import login_required,current_user,login_user,logout_user
-from jobplus.forms import CompanyProfileFrom,JobForm
-from jobplus.models import User,Company,Job,db,Delivery
+from jobplus.forms import JobForm
+from jobplus.models import Company,Job,db,Delivery
 from jobplus.decorators import company_required
 
 company = Blueprint('company',__name__,url_prefix='/companies')
 
 # 企业列表
 @company.route('/')
-def companyindex():
+def company_index():
     page = request.args.get('page',1,type=int)
     company = Company.query.paginate(
             page=page,
@@ -20,11 +20,9 @@ def companyindex():
 # 企业详情
 @company.route('/<int:company_id>')
 def detial(company_id):
-    company = User.query.get_or_404(company_id)
+    company = Company.query.get_or_404(company_id)
     jobs = Job.query.filter_by(company_id=company_id)
-    if not company.is_company:
-        abort(404)
-    return render_template('company/detial.html',company=company,jobs=jobs,active='',panel='about')
+    return render_template('company/detial.html',company=company,jobs=jobs)
 
 # 企业管理页
 @company.route('/admin')
