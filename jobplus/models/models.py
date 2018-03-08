@@ -9,7 +9,7 @@ from .base_models import db,Base
 class User(Base, UserMixin):
     __tablename__ = 'user'
 
-    ROLE_USER = 10
+    ROLE_EMPLOYEE = 10
     ROLE_COMPANY = 20
     ROLE_ADMIN = 30
 
@@ -18,17 +18,12 @@ class User(Base, UserMixin):
     email = db.Column(db.String(64), unique=True, index=True, nullable=False)
     _password = db.Column('password', db.String(256), nullable=False)
     logo_img = db.Column(db.String(128))
-    real_name = db.Column(db.String(32))
-    phone = db.Column(db.String(32))
-    work_years = db.Column(db.SmallInteger)
-    role = db.Column(db.SmallInteger, default=ROLE_USER)
+    # 连接到公司的关系为1-1
+    comapny = db.relationship('Company',uselist=False)
+    # 连接到求职者的关系为1-1
+    employee = db.relationship('Employee',uselist=False)
+    role = db.Column(db.SmallInteger, default=ROLE_EMPLOYEE)
     #根据用户在网站上填写的内容生成的简历
-    resume = db.relationship('Resume',uselist=False)
-    collect_jobs = db.relationship('Job',secondary=user_job)
-    #用户上传的简历或者简历链接
-    resume_url = db.Column(db.String(64))
-    #企业用户详情
-    detail = db.relationship('CompanyDetail',uselist=False)
 
     def __repr__(self):
         return '<User:{}>'.format(self.username)
@@ -54,7 +49,7 @@ class User(Base, UserMixin):
     
     @property
     def is_staff(self):
-        return self.role == self.ROLE_STAFF
+        return self.role == self.ROLE_EMPLOYEE
 
 import enum
 class SexType(enum.Enum):
@@ -62,7 +57,8 @@ class SexType(enum.Enum):
     MALE = 1
     FEMALE = 2
 
-class employee(Base):
+# 求职者表
+class Employee(Base):
     __tablename__ = 'employee'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -73,49 +69,12 @@ class employee(Base):
     description = db.Column(db.String(256))
     resume = db.Column(db.String(128))
 
-class Experience(Base):
-    __abstract__ = True
-
-    id = db.Column(db.Integer, primary_key=True)
-    begin_at = db.Column(db.DateTime)
-    end_at = db.Column(db.DateTime)
-
-    description = db.Column(db.String(256))
-
-class JobExperience(Experience):
-    __tablename__ = 'job_experience'
-
-    company = db.Column(db.String(32), nullable=False)
-    city = db.Column(db.String(32),nullable=False)
-    resume_id = db.Column(db.Integer, db.ForeignKey('resume.id'))
-    resume = db.relationship('Resume', uselist=False)
-
-class EduExperience(Experience):
-    __tablename__ = 'edu_experience'
-
-    school = db.Column(db.String(32), nullable=False)
-    #专业
-    specialty = db.Column(db.String(32), nullable=False)
-    degree = db.Column(db.String(32))
-    resume_id = db.Column(db.Integer, db.ForeignKey('resume.id'))
-    resume = db.relationship('Resume', uselist=False)
-
-class ProjectExperience(Experience):
-    __tablename__ = 'project_experience'
-
-    name = db.Column(db.String(32), nullable=False)
-    #在项目中扮演的角色
-    role = db.Column(db.String(32))
-    #多个技术用逗号隔开
-    technologys = db.Column(db.String(64))
-    resume_id = db.Column(db.Integer, db.ForeignKey('resume.id'))
-    resume = db.relationship('Resume', uselist=False)
-
+# 企业表
 class Company(Base):
     __tablename__ = 'comapny'
 
     id = db.Column(db.Integer,primary_key=True)
-    user_id = db.Column(db.Integer,db.ForeginKey('user.id'),index=True)
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id'),index=True)
     user = db.relationship('User',uselist=False)
     website = db.Column(db.String(64))
     #一句话描述
@@ -137,6 +96,7 @@ class Company(Base):
     def url(self):
         return url_for('company.detail',company_id=self.id)
 
+# 职位表
 class Job(Base):
     __tablename__ = 'job'
     
@@ -169,11 +129,12 @@ class Job(Base):
         return (d is not None)
 
 class Qualify_Type(enum.Enum):
-    UNREAD = 0
-    READ = 1
-    REFUSE = 2
-    ACCEPT =3
+    UNREAD = 0 # 未被阅读
+    READ = 1 # 已被阅读
+    REFUSE = 2 # 拒绝该简历
+    ACCEPT =3 # 接受该简历
 
+# 投递表
 class Delivery(Base):
     __tablename__ = 'delivery'
 
@@ -182,7 +143,7 @@ class Delivery(Base):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'))
     user = db.relationship("User")
-    resume_id = db.Column(db.Integer,db.ForeginKey('employee.id'))
+    resume_id = db.Column(db.Integer,db.ForeignKey('employee.id'))
     resume = db.relationship('Employee')
     job = db.relationship('Job')
     

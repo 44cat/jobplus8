@@ -1,4 +1,4 @@
-from flask import Blueprint,render_template,current_app,request,flash,redirect,url_for
+from flask import Blueprint,render_template,current_app,request,flash,redirect,url_for,abort
 from flask_login import current_user,login_required,login_user,logout_user
 from jobplus.models import Delivery,db,Job
 
@@ -14,13 +14,13 @@ def index():
             per_page=current_app.config['INDEX_PER_PAGE'],
             error_out=False,
             )
-    return render_template('job/index.html',pagination=jobs,active='job')
+    return render_template('job/index.html',job=job)
 
 # 职位详情页
 @job.route('/<int:job_id>/')
 def detail(job_id):
     job = Job.query.get_or_404(job_id)
-    return render_template('job/detail.html',job=job,active='')
+    return render_template('job/detail.html',job=job)
 
 # 简历投递页
 @job.route('/<int:job_id>/apply')
@@ -29,12 +29,13 @@ def apply(job_id):
     job = Job.query.get_or_404(job_id)
     if current_user.employee.resume is None:
         flash('请上传简历','warnning')
-    elif job.current_user_is_applied:
+    elif job.current_user_is_delivery:
         flash('已经投递过该职位','warning')
     else:
         d = Delivery(
                 job_id=job.id,
-                user_id=current_user.id
+                user_id=current_user.id,
+                company_id=job.company.id
                 )
         db.session.add(d)
         db.session.commit()
@@ -43,7 +44,7 @@ def apply(job_id):
 
 # 职位上线
 @job.route('/<int:job_id>/enable')
-def enable(job_id):
+def ensable(job_id):
     job = Job.query.get_or_404(job_id)
     if not current_user.is_admin and current_user.company.id != job.company_id:
         abort(404)

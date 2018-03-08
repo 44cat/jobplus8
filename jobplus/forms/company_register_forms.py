@@ -38,7 +38,7 @@ class CompanyRegister(FlaskForm):
         if User.query.filter_by(email=filed.data).first():
             raise ValidationError('邮箱已经存在')
 
-class CompanyProfileForm(FlaskForm):
+class CompanyProfile(FlaskForm):
     name = StringField('企业名称',validators=[Required(),Length(2,24)])
     email = StringField('邮箱', validators=[Required(), Email(message='请输入合法email地址')])
     password = PasswordField('密码(不填写保持不变)',validators=[Required()])

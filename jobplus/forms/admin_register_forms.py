@@ -5,7 +5,7 @@ class AdminRegister(FlaskForm):
     name = StringField('管理员名称',validators=[Required(),Length(3,24)])
     email = StringField('邮箱', validators=[Required(), Email()])
     password = PasswordField('密码', validators=[Required(), Length(6, 24)])
-    repeat_password = Password('重复密码',validators=[Required(),EqualTo('password')])
+    repeat_password = PasswordField('重复密码',validators=[Required(),EqualTo('password')])
     remember_me = BooleanField('记住我')
     image =  StringField('头像链接')
     submit = SubmitField('提交') 
@@ -46,11 +46,11 @@ class AdminRegister(FlaskForm):
         return user
 
 
-class AdminProfileForm(FlaskForm):
+class AdminProfile(FlaskForm):
     name = StringField('管理员名称',validators=[Required(),Length(2,24)])
     email = StringField('邮箱',validators=[Required(),Email(message='亲输合法的email地址')])
     password = PasswordField('密码',validators=[Required()])
-    repeat_password = Password('重复密码',validators=[Required(),EqualTo('password')])
+    repeat_password = PasswordField('重复密码',validators=[Required(),EqualTo('password')])
     image = StringField('头像链接')
     submit = SubmitField('提交')
 

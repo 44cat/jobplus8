@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, current_app, redirect, url_for, flash
+from flask_login import login_user,logout_user,login_required
 from jobplus.decorators import admin_required
 from jobplus.models import User,Job
 from jobplus.forms import UserRegister,CompanyRegister,AdminRegister,UserProfile,AdminProfile,CompanyProfile
