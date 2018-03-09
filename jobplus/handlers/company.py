@@ -15,7 +15,7 @@ def company_index():
             per_page=current_app.config['INDEX_PER_PAGE'],
             error_out=False
             )
-    return render_template('company/company.html',pagination=pagination,active='company')
+    return render_template('company/company.html',pagination=company,active='company')
 
 # 企业详情
 @company.route('/<int:company_id>')

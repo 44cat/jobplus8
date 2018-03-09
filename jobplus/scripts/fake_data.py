@@ -4,6 +4,7 @@ import enum
 from selenium import webdriver
 from lxml import etree
 import time
+import faker
 from faker import Faker
 import random
 
@@ -52,7 +53,7 @@ def run_more():
             name = company_names[i]
             email = faker.email()
             password = '123456'
-            logo_img = company_logos[i][company_logos[i].rfind('(')+1:company_logos][i].rfind(')')-1]
+            logo_img = company_logos[i][company_logos[i].rfind('(')+1:company_logos[i].rfind(')')-1]
             if User.query.filter_by(name=name).first():
                 # 如果企业存在就不存入数据库
                 i += 1

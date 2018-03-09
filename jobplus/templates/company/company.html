@@ -1,12 +1,12 @@
 {% extends "layouts/base.html" %}
 {% from "macros.html" import render_pagination %}
 
-{% block title %}企业列表{% endblock %}
+{% block title %}浼佷笟鍒楄〃{% endblock %}
 {% block body %}
-    <h2 class="h4 mt40 company-list-title">企业列表</h2>
+    <h2 class="h4 mt40 company-list-title">浼佷笟鍒楄〃</h2>
     <br>
 <div class="row">
-    {% for company i pagination.items %}
+    {% for company in pagination.items %}
     <div class="col-sm-12 job-list-item-block">
         <div class="thumbnail">
             <div class="caption">

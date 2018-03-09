@@ -71,7 +71,7 @@ class Employee(Base):
 
 # 企业表
 class Company(Base):
-    __tablename__ = 'comapny'
+    __tablename__ = 'company'
 
     id = db.Column(db.Integer,primary_key=True)
     user_id = db.Column(db.Integer,db.ForeignKey('user.id'),index=True)
@@ -143,7 +143,7 @@ class Delivery(Base):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'))
     user = db.relationship("User")
-    resume_id = db.Column(db.Integer,db.ForeignKey('employee.id'))
+    employee_id = db.Column(db.Integer,db.ForeignKey('employee.id'))
     resume = db.relationship('Employee')
     job = db.relationship('Job')
     

@@ -1,12 +1,12 @@
 from jobplus.models import db,User,Employee,Company,Job,Delivery
-from datetime import datatime,date
+from datetime import datetime,date
 import enum
 
 # 生成一个管理员,一个求职者,一个企业用户
 def iter_users():
     yield User(
         name='admin',
-        emtial = 'admin@qq.com',
+        email = 'admin@qq.com',
         password = '123456',
         logo_img = 'https://avatars2.githubusercontent.com/u/26021510?s=400&v=4',
         role = 30
@@ -14,7 +14,7 @@ def iter_users():
     # 创建企业用户
     yield User(
         name='company',
-        emtial = 'company@qq.com',
+        email = 'company@qq.com',
         password = 'company',
         logo_img = 'https://avatars2.githubusercontent.com/u/26021510?s=400&v=4',
         role = 20
@@ -37,7 +37,7 @@ class SexType(enum.Enum):
 def iter_employee():
     yield Employee(
         user = User.query.filter_by(name='user').first(),
-        sex = SexType.MALE,
+        # sex = SexType.MALE,
         location = '金银岛',
         description = '大家好',
         resume = 'url'
@@ -58,8 +58,8 @@ def iter_job():
     print(num)
     yield Job(
         name = '工程师',
-        wage = '80万/年',
-        location = '北京',
+        wage = '80万/月',
+        location = '金银岛',
         company = Company.query.filter_by(user_id=num).first(),
         description = '我们需要招的是工程师',
         requirement = '我们需要招有10年的工作经验的人'
@@ -88,11 +88,11 @@ class Qualify_Type(enum.Enum):
 
 def iter_delivery():
     num = User.query.filter_by(name='company').first().id
-    company_id = Company.query.filter_by(user_id=num).first()
+    company = Company.query.filter_by(user_id=num).first()
     yield Delivery(
-            company_id = company_id.id,
+            company_id = company.id,
             # 投递的工作需要根据职位和公司id确定
-            job_id = Job.query.filter_by(name='工程师',company_id=company_id.id).first().id,
+            job_id = Job.query.filter_by(name='工程师',company_id=company.id).first().id,
             employee_id = Employee.query.filter_by(user_id = User.query.filter_by(name='user').first().id).first().id,
             qualify = 'UNREAD'
     )

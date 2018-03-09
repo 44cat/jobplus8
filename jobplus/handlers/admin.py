@@ -80,7 +80,7 @@ def user_profile(user_id):
     return render_template('admin/profile.html',form=form,user=user)
 
 # 修改管理员信息
-@admin.route('/admin_profile/<int:user_id>/edit',methods=['GET','POST'])
+@admin.route('/admin_profile/<int:user_id>',methods=['GET','POST'])
 @login_required
 def admin_profile(user_id):
     user = User.query.filter_by(id=user_id).first()

@@ -17,10 +17,10 @@
     <div class="collapse navbar-collapse" id="header-nav">
         <ul class="nav navbar-nav">
             <li class="{% if active == 'job' %}active{% endif %}">
-                <a href="{{ url_for('job.index') }}">职位</a>
+                <a href="{{ url_for('job.job_index') }}">职位</a>
             </li>
             <li class="{% if active == 'company' %}active{% endif %}">
-                <a href="{{ url_for('company.index') }}">公司</a>
+                <a href="{{ url_for('company.company_index') }}">公司</a>
             </li>
 
             {% if current_user.is_authenticated and current_user.is_admin %}
@@ -34,8 +34,8 @@
 
         <ul class="nav navbar-nav navbar-right">
           {% if not current_user.is_authenticated %}
-            <li><a href="{{ url_for('front.userregister') }}">求职者注册</a></li>
-            <li><a href="{{ url_for('front.companyregister') }}">企业注册</a></li>
+            <li><a href="{{ url_for('front.user_register') }}">求职者注册</a></li>
+            <li><a href="{{ url_for('front.company_register') }}">企业注册</a></li>
             <li><a href="{{ url_for('front.login') }}">登录</a></li>
           {% else %}
             <li class="dropdown">

@@ -41,7 +41,7 @@ def admin_profile():
 # 修改企业用户的信息
 @user.route('/company_profile',methods=['GET','POST'])
 @login_required
-def admin_profile():
+def company_profile():
     form = CompanyProfile()
     if form.validate_on_submit():
         form.update_profile(current_user)

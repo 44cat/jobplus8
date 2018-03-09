@@ -6,15 +6,13 @@ job = Blueprint('job', __name__, url_prefix='/jobs')
 
 # 职位列表页
 @job.route('/')
-def index():
+def job_index():
     page = request.args.get('page',default=1,type=int)
     
-    jobs = Job.query.order_by(Job.created_at.desc()).paginate(
-            page=page,
-            per_page=current_app.config['INDEX_PER_PAGE'],
-            error_out=False,
-            )
-    return render_template('job/index.html',job=job)
+    jobs = Job.query.paginate(page=page,per_page=current_app.config['INDEX_PER_PAGE'],
+            error_out=False)
+
+    return render_template('job/job.html',pagination=jobs,active='job')
 
 # 职位详情页
 @job.route('/<int:job_id>/')

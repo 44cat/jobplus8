@@ -7,12 +7,6 @@ from .company import company
 from .job import job
 
 
-def register_blueprints(app):
-    app.register_blueprint(front)
-    #app.register_blueprint(admin)
-    app.register_blueprint(user)
-    app.register_blueprint(company)
-    app.register_blueprint(job)
 
 def register_errors(app):
 

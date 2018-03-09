@@ -14,7 +14,6 @@ def index():
     companies = Company.query.order_by(Company.description.desc()).limit(8)
     return render_template(
             'front/index.html',
-            active = 'base',
             newest=[jobs,companies],
             hot=[jobs,companies]
             )
@@ -22,7 +21,7 @@ def index():
 # 用户注册页
 @front.route('/userregister', methods=['GET', 'POST'])
 def user_register():
-    form = RegisterForm()
+    form = UserRegister()
     try:
         form.validate_on_submit()
         form.create_user()
@@ -35,7 +34,7 @@ def user_register():
 # 公司注册页
 @front.route('/companyregister', methods=['GET', 'POST'])
 def company_register():
-    form = CompanyRegisterForm()
+    form = CompanyRegister()
     try:
         form.validate_on_submit()
         form.create_user()
