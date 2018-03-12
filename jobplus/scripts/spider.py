@@ -3,6 +3,8 @@ import requests
 from faker import Faker 
 from jobplus.models import db,User,CompanyDetail,Job
 
+
+
 fake = Faker('zh_CN')
 
 class LagouSpider(object):
@@ -66,6 +68,24 @@ class FakerData(object):
             d.user_id = c.id
             db.session.add(d)
             db.session.commit()
+
+    def fake_job(self):
+        companies = User.query.filter_by(role=User.ROLE_COMPANY).all()
+        for i in range(100):
+            company = random.choice(companies)
+            job = Job(
+                name=fake.word()+'工程师',
+                salary_low=random.randrage(3500,9000,1000),
+                salary_high=random.randrange(9000,25000,1000),
+                location=company.detail.location,
+                tags=','.join([fake.word() for i in range(3)]),
+                company=company,
+                experience_requirement=random.choice(['不限','1','1-3','3-5','5+']),
+                degree_requirement=random.choice(['不限','本科','硕士','博士'])
+            )
+        db.session.add(job)
+        db.session.commit()
+
 
 if __name__ == '__main__':
     f = FakerData()

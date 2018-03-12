@@ -88,11 +88,11 @@ class Qualify_Type(enum.Enum):
 
 def iter_delivery():
     num = User.query.filter_by(name='company').first().id
-    company = Company.query.filter_by(user_id=num).first()
+    company_id = Company.query.filter_by(user_id=num).first()
     yield Delivery(
-            company_id = company.id,
+            company_id = company_id.id
             # 投递的工作需要根据职位和公司id确定
-            job_id = Job.query.filter_by(name='工程师',company_id=company.id).first().id,
+            job_id = Job.query.filter_by(name='工程师',company_id=company_id).first().id,
             employee_id = Employee.query.filter_by(user_id = User.query.filter_by(name='user').first().id).first().id,
             qualify = 'UNREAD'
     )

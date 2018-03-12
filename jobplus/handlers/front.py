@@ -22,26 +22,20 @@ def index():
 @front.route('/userregister', methods=['GET', 'POST'])
 def user_register():
     form = UserRegister()
-    try:
-        form.validate_on_submit()
+    if form.validate_on_submit():
         form.create_user()
         flash('注册成功，请登录！', 'success')
         return redirect(url_for('.login')) # 注册成功则自动跳转到登录页
-    except:
-        flash('注册失败,请重新注册','warning')
     return render_template('front/register_user.html', form=form)
 
 # 公司注册页
 @front.route('/companyregister', methods=['GET', 'POST'])
 def company_register():
     form = CompanyRegister()
-    try:
-        form.validate_on_submit()
+    if form.validate_on_submit():
         form.create_user()
         flash('注册成功，请登录！', 'success')
         return redirect(url_for('.login'))
-    except:
-        flash('注册失败,请重新注册','warning')
     return render_template('front/register_company.html',form=form)
 
 # 登录页

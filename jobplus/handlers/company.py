@@ -4,7 +4,7 @@ from jobplus.forms import JobForm
 from jobplus.models import Company,Job,db,Delivery
 from jobplus.decorators import company_required
 
-company = Blueprint('company',__name__,url_prefix='/companies')
+company = Blueprint('company',__name__,url_prefix='/company')
 
 # 企业列表
 @company.route('/')

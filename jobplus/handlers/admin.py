@@ -62,7 +62,7 @@ def create_company():
     return render_template('admin/create_company.html',form=form)
 
 # 修改求职者用户信息
-@admin.route('/user_profile/<int:user_id>/edit',methods=['GET','POST'])
+@admin.route('/user_profile/<int:user_id>',methods=['GET','POST'])
 @login_required
 def user_profile(user_id):
     user = User.query.filter_by(id=user_id).first()
@@ -95,7 +95,7 @@ def admin_profile(user_id):
     return render_template('admin/profile.html',form=form,user=user)
 
 # 修改企业用户信息
-@admin.route('/company_profile/<int:user_id>/edit',methods=['GET','POST'])
+@admin.route('/company_profile/<int:user_id>',methods=['GET','POST'])
 @login_required
 def company_profile(user_id):
     user = User.query.filter_by(id=user_id).first()

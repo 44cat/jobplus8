@@ -1,0 +1,111 @@
+{% extends "company/admin_base" %}
+{% from "macros.html" import render_form %}
+
+{% block admin %}
+<p>面试管理</p>
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#home" data-toggle="tab">未处理列表</a></li>
+    <li><a href="#unqualifiedlist" data-toggle="tab">不合适列表</a></li>
+    <li><a href="#interviewlist" data-toggle="tab">面试列表</a></li>
+</ul>
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane active" id="home">
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>职位名称</th>
+                    <th>求职者姓名</th>
+                    <th>简历</th>
+                    <th>投递时间</th>
+                    <th>操作</th>
+                </tr>
+                <tbody>
+                {% for delivery in pagination.items %}
+                    {% if delivery.qualify.name == 'UNREAD' %}
+                    <!--这里只显示未读的记录-->
+                    <tr>
+                        <td>{{ delivery.id }}</td>
+                        <td>{{ delivery.job.name }}</td>
+                        <td>{{ delivery.user.name }}</td>
+                        <td>{{ delivery.resume.description }}</td>
+                        <td>{{ delivery.resume.resume }}</td>
+                        <td>{{ delivery.created_at }}</td>
+                        <td>{{ delivery.qualify.name }}</td>
+                        <td>
+                            <a href="{{ url_for('company.delivery_interview',company_id=company_id,delivery_id=delivery.id) }}" type="button" class="btn btn-default" title="编辑">
+                            面试
+                            </a>
+                            <a href="{{ url_for('company.delivery_reject',company_id=company_id,delivery_id=delivery.id) }}" type="button" class="btn btn-default" title="编辑">
+                            拒绝
+                            </a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </thead>
+        </table>
+    </div>
+    <div class="tab-pane" id="unqualifiedlist">
+        <!--不合适列表-->
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>职位名称</th>
+                    <th>求职者姓名</th>
+                    <th>简历</th>
+                    <th>投递时间</th>
+                    <th>操作</th>
+                </tr>
+                <tbody>
+                {% for delivery in pagination.items %}
+                <tr>
+                    <td>{{ delivery.id }}</td>
+                    <td>{{ delivery.job.name }}</td>
+                    <td>{{ delivery.user.name }}</td>
+                    <td>{{ delivery.user.employee.description }}</td>
+                    <td>{{ delivery.user.employee.resume }}</td>
+                    <td>{{ delivery.created_at }}</td>
+                    <td>{{ delivery.qualify.name}}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+            </thead>
+        </table>
+    </div>
+    <div class="tab-pane" id="interviewlist">
+        <!--面试列表-->
+        <table class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>职位名称</th>
+                    <th>求职者姓名</th>
+                    <th>简历</th>
+                    <th>投递时间</th>
+                    <th>操作</th>
+                </tr>
+                <tbody>
+                {% for delivery in pagination.items %}
+                <tr>
+                    <td>{{ delivery.id }}</td>
+                    <td>{{ delivery.job.name }}</td>
+                    <td>{{ delivery.user.name }}</td>
+                    <td>{{ delivery.user.employee.description }}</td>
+                    <td>{{ delivery.user.employee.resume }}</td>
+                    <td>{{ delivery.created_at }}</td>
+                    <td>{{ delivery.qualify.name}}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+            </thead>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+
