@@ -94,7 +94,7 @@ class Company(Base):
 
     @property
     def url(self):
-        return url_for('company.detail',company_id=self.id)
+        return url_for('company.detial',company_id=self.id)
 
 # 职位表
 class Job(Base):

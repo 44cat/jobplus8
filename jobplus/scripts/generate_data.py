@@ -1,6 +1,8 @@
 from jobplus.models import db,User,Employee,Company,Job,Delivery
 from datetime import datetime,date
 import enum
+import os
+import json
 
 # 生成一个管理员,一个求职者,一个企业用户
 def iter_users():
@@ -67,17 +69,18 @@ def iter_job():
 
 def iter_jobs():
     user = User.query.filter_by(name='user').first()
-    with open(os.path.join(os.path.dirname(__file__),'../..','data','job.json')) as f:
+    # with open(os.path.join(os.path.dirname(__file__),'datas','job.json')) as f:
+    with open(os.path.join(os.path.dirname(__file__),'datas','job.json')) as f:
         jobs = json.load(f)
     for job in jobs:
         yield Job(
                 name = job['name'],
-                location = job['location'],
-                wage = job['wage'],
-                description = job['description'],
-                qualifications = job['qulications'],
-                experience = job['experience'],
-                work_time = job['work_time']
+                #location = job['location'],
+                #wage = job['wage'],
+                #description = job['description'],
+                #qualifications = job['qulications'],
+                #experience = job['experience'],
+                #work_time = job['work_time']
             )
 # 生成投递表
 class Qualify_Type(enum.Enum):
@@ -90,9 +93,9 @@ def iter_delivery():
     num = User.query.filter_by(name='company').first().id
     company_id = Company.query.filter_by(user_id=num).first()
     yield Delivery(
-            company_id = company_id.id
+            company_id = company_id.id,
             # 投递的工作需要根据职位和公司id确定
-            job_id = Job.query.filter_by(name='工程师',company_id=company_id).first().id,
+            #job_id = Job.query.filter_by(name='工程师',company_id=company_id).first().id,
             employee_id = Employee.query.filter_by(user_id = User.query.filter_by(name='user').first().id).first().id,
             qualify = 'UNREAD'
     )
@@ -107,7 +110,7 @@ def run():
     for company in iter_company():
         db.session.add(company)
 
-    for job in iter_company():
+    for job in iter_jobs():
         db.session.add(job)
 
     for delivery in iter_delivery():
