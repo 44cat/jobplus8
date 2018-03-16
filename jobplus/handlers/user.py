@@ -21,7 +21,7 @@ def user_profile():
     form.sex.data = current_user.employee.sex.name
     form.location.data = current_user.employee.location
     form.description.data = current_user.employee.description
-    form.resume.data = current_user.employy.resume
+    form.resume.data = current_user.employee.resume
     return render_template('profile.html',form=form,user=current_user)
 
 # 修改管理员信息
