@@ -49,9 +49,14 @@ def iter_employee():
 def iter_company():
     yield Company(
         user = User.query.filter_by(name='company').first(),
-        website = 'url',
+        website = 'https://www.lagou.com/',
         oneword = '这里是企业的介绍',
-        description = '这是一家有着百年历史的企业'
+        description = '这是一家有着百年历史的企业',
+        stack = 'Python',
+        team_introduction = '猫猫天团',
+        welfares = '送美人一只猫',
+        field = '养猫',
+        finance_stage = 'E轮融资'
     )
             
 # 生成职位表的信息
@@ -110,7 +115,7 @@ def run():
     for company in iter_company():
         db.session.add(company)
 
-    for job in iter_jobs():
+    for job in iter_job():
         db.session.add(job)
 
     for delivery in iter_delivery():

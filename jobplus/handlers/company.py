@@ -19,10 +19,10 @@ def company_index():
 
 # 企业详情
 @company.route('/<int:company_id>')
-def detial(company_id):
+def detail(company_id):
     company = Company.query.get_or_404(company_id)
     jobs = Job.query.filter_by(company_id=company_id)
-    return render_template('company/detial.html',company=company,jobs=jobs)
+    return render_template('company/detail.html',company=company,jobs=jobs)
 
 # 企业管理页
 @company.route('/admin')

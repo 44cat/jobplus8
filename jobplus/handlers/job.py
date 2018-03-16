@@ -9,8 +9,7 @@ job = Blueprint('job', __name__, url_prefix='/jobs')
 def job_index():
     page = request.args.get('page',default=1,type=int)
     
-    jobs = Job.query.paginate(page=page,per_page=current_app.config['INDEX_PER_PAGE'],
-            error_out=False)
+    jobs = Job.query.paginate(page=page,per_page=current_app.config['INDEX_PER_PAGE'])
 
     return render_template('job/job.html',pagination=jobs,active='job')
 

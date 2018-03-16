@@ -26,7 +26,7 @@ class User(Base, UserMixin):
     #根据用户在网站上填写的内容生成的简历
 
     def __repr__(self):
-        return '<User:{}>'.format(self.username)
+        return '<User:{}>'.format(self.name)
 
     @property
     def password(self):
@@ -65,7 +65,7 @@ class Employee(Base):
     user_id = db.Column(db.Integer,db.ForeignKey('user.id'))
     sex = db.Column(db.Enum(SexType),default=SexType.NONE)
     location = db.Column(db.String(128))
-    user = db.relationship('User',uselist=False)
+    user = db.relationship('User',uselist=False,backref=db.backref('user_detail',uselist=False))
     description = db.Column(db.String(256))
     resume = db.Column(db.String(128))
 
@@ -94,7 +94,7 @@ class Company(Base):
 
     @property
     def url(self):
-        return url_for('company.detial',company_id=self.id)
+        return url_for('company.detail',company_id=self.id)
 
 # 职位表
 class Job(Base):
