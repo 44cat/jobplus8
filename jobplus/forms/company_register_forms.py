@@ -31,11 +31,11 @@ class CompanyRegister(FlaskForm):
         return user
 
     def validate_name(self, field):
-        if User.query.filter_by(name=filed.data).first():
+        if User.query.filter_by(name=field.data).first():
             raise ValidationError('用户名已经存在')
 
     def validate_email(self, field):
-        if User.query.filter_by(email=filed.data).first():
+        if User.query.filter_by(email=field.data).first():
             raise ValidationError('邮箱已经存在')
 
 class CompanyProfile(FlaskForm):

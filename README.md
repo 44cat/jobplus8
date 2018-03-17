@@ -53,6 +53,15 @@ $ flask db init
 $ flask db migrate -m "init database"
 数据库数据更新：$ flask db upgrade
 ```
-7.启动应用，并打开链接即可
+**执行完flask db upgrade后再生成数据**
+
+7.生成数据
+```
+$ flask shell
+In [1]:from jobplus.scripts import run
+In [2]:run()
+```
+
+8.启动应用，并打开链接即可
 
 $ flask run
