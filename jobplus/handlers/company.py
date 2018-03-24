@@ -34,7 +34,7 @@ def admin_base():
 @company.route('/admin/<int:company_id>')
 @company_required
 def admin_index(company_id):
-    if not current_user.company.id == company_id:
+    if not current_user.id == company_id:
         abort(404)
     page = request.args.get('page',default=1,type=int)
     pagination = Job.query.filter_by(company_id=company_id).paginate(
@@ -83,15 +83,15 @@ def delete_job(job_id):
 @company.route('/job/<int:company_id>/apply/todolist')
 @company_required
 def delivery_index(company_id):
-    if not current_user.company.id == company.id:
+    if not current_user.id == company_id:
         abort(404)
     page = request.args.get('page',default=1,type=int)
-    pagination = Delivery.query.filter_by(company_id=current_user.company.id).paginate(
+    pagination = Delivery.query.filter_by(company_id=current_user.id).paginate(
             page=page,
             per_page=current_app.config['ADMIN_PER_PAGE'],
             error_out=False
             )
-    return render_template('company/resume_index.html',company_id=current_user.company.id,pagination=pagination)
+    return render_template('company/resume_index.html',company_id=current_user.id,pagination=pagination)
 
 # 拒绝面试请求页
 @company.route('/job/<int:delivery_id>/reject')

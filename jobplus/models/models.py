@@ -19,7 +19,7 @@ class User(Base, UserMixin):
     _password = db.Column('password', db.String(256), nullable=False)
     logo_img = db.Column(db.String(128))
     # 连接到公司的关系为1-1
-    comapny = db.relationship('Company',uselist=False)
+    company = db.relationship('Company',uselist=False)
     # 连接到求职者的关系为1-1
     employee = db.relationship('Employee',uselist=False)
     role = db.Column(db.SmallInteger, default=ROLE_EMPLOYEE)

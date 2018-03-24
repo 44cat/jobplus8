@@ -22,7 +22,7 @@ def user_profile():
     form.location.data = current_user.employee.location
     form.description.data = current_user.employee.description
     form.resume.data = current_user.employee.resume
-    return render_template('profile.html',form=form,user=current_user)
+    return render_template('user/profile.html',form=form,user=current_user)
 
 # 修改管理员信息
 @user.route('/admin_profile',methods=['GET','POST'])
@@ -36,7 +36,7 @@ def admin_profile():
     form.name.data = current_user.name
     form.email.data = current_user.email
     form.image.data = current_user.logo_img
-    return render_template('profile.html',form=form,user=current_user)
+    return render_template('admin/profile.html',form=form,user=current_user)
 
 # 修改企业用户的信息
 @user.route('/company_profile',methods=['GET','POST'])
@@ -50,4 +50,4 @@ def company_profile():
     form.name.data = current_user.name
     form.email.data = current_user.email
     form.image.data = current_user.logo_img
-    return render_template('profile.html',form=form,user=current_user)
+    return render_template('company/profile.html',form=form,user=current_user)

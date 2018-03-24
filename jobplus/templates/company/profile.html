@@ -1,4 +1,4 @@
-{% extends "layout/base.html" %}
+{% extends "layouts/base.html" %}
 {% from "macros.html" import render_form %}
 
 {% set title='COMPANY PAGE'%}
@@ -11,7 +11,7 @@
 
 {% block body %}
 <h4>管理企业信息</h4>
-{{ render_form(form,url_for('company.profile')) }}
+{{ render_form(form,url_for('user.company_profile')) }}
 {% endblock %}
 
 

@@ -1,4 +1,4 @@
-{% extends "layout/base.html" %}
+{% extends "layouts/base.html" %}
 {% from "macros.html" import render_form %}
 
 {% set title='USER PAGE'%}
@@ -14,7 +14,7 @@
 
 {% block body %}
 <h4>编辑个人信息</h4>
-{{ render_form(form,url_for('user.profile')) }}
+{{ render_form(form,url_for('user.user_profile')) }}
 {% endblock %}
 
 

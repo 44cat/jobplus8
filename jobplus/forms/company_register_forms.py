@@ -41,7 +41,7 @@ class CompanyRegister(FlaskForm):
 class CompanyProfile(FlaskForm):
     name = StringField('企业名称',validators=[Required(),Length(2,24)])
     email = StringField('邮箱', validators=[Required(), Email(message='请输入合法email地址')])
-    password = PasswordField('密码(不填写保持不变)',validators=[Required()])
+    password = PasswordField('密码',validators=[Required()])
     website = StringField('公司网站',validators=[Required()])
     image = StringField('头像链接')
     oneword = StringField('一句话简介',validators=[Length(0,128)])

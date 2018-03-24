@@ -1,12 +1,12 @@
-{% extends "company/admin_base" %}
+{% extends "company/admin_base.html" %}
 {% from "macros.html" import render_form %}
 
 {% block admin %}
-<p>ÃæÊÔ¹ÜÀí</p>
+<p>é¢è¯•ç®¡ç†</p>
 <ul class="nav nav-tabs">
-    <li class="active"><a href="#home" data-toggle="tab">Î´´¦ÀíÁĞ±í</a></li>
-    <li><a href="#unqualifiedlist" data-toggle="tab">²»ºÏÊÊÁĞ±í</a></li>
-    <li><a href="#interviewlist" data-toggle="tab">ÃæÊÔÁĞ±í</a></li>
+    <li class="active"><a href="#home" data-toggle="tab">æœªå¤„ç†åˆ—è¡¨</a></li>
+    <li><a href="#unqualifiedlist" data-toggle="tab">ä¸åˆé€‚åˆ—è¡¨</a></li>
+    <li><a href="#interviewlist" data-toggle="tab">é¢è¯•åˆ—è¡¨</a></li>
 </ul>
 <div id="myTabContent" class="tab-content">
     <div class="tab-pane active" id="home">
@@ -14,16 +14,16 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Ö°Î»Ãû³Æ</th>
-                    <th>ÇóÖ°ÕßĞÕÃû</th>
-                    <th>¼òÀú</th>
-                    <th>Í¶µİÊ±¼ä</th>
-                    <th>²Ù×÷</th>
+                    <th>èŒä½åç§°</th>
+                    <th>æ±‚èŒè€…å§“å</th>
+                    <th>ç®€å†</th>
+                    <th>æŠ•é€’æ—¶é—´</th>
+                    <th>æ“ä½œ</th>
                 </tr>
                 <tbody>
                 {% for delivery in pagination.items %}
                     {% if delivery.qualify.name == 'UNREAD' %}
-                    <!--ÕâÀïÖ»ÏÔÊ¾Î´¶ÁµÄ¼ÇÂ¼-->
+                    <!--è¿™é‡Œåªæ˜¾ç¤ºæœªè¯»çš„è®°å½•-->
                     <tr>
                         <td>{{ delivery.id }}</td>
                         <td>{{ delivery.job.name }}</td>
@@ -33,11 +33,11 @@
                         <td>{{ delivery.created_at }}</td>
                         <td>{{ delivery.qualify.name }}</td>
                         <td>
-                            <a href="{{ url_for('company.delivery_interview',company_id=company_id,delivery_id=delivery.id) }}" type="button" class="btn btn-default" title="±à¼­">
-                            ÃæÊÔ
+                            <a href="{{ url_for('company.delivery_interview',company_id=company_id,delivery_id=delivery.id) }}" type="button" class="btn btn-default" title="ç¼–è¾‘">
+                            é¢è¯•
                             </a>
-                            <a href="{{ url_for('company.delivery_reject',company_id=company_id,delivery_id=delivery.id) }}" type="button" class="btn btn-default" title="±à¼­">
-                            ¾Ü¾ø
+                            <a href="{{ url_for('company.delivery_reject',company_id=company_id,delivery_id=delivery.id) }}" type="button" class="btn btn-default" title="ç¼–è¾‘">
+                            æ‹’ç»
                             </a>
                         </td>
                     </tr>
@@ -48,16 +48,16 @@
         </table>
     </div>
     <div class="tab-pane" id="unqualifiedlist">
-        <!--²»ºÏÊÊÁĞ±í-->
+        <!--ä¸åˆé€‚åˆ—è¡¨-->
         <table class="table text-nowrap">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Ö°Î»Ãû³Æ</th>
-                    <th>ÇóÖ°ÕßĞÕÃû</th>
-                    <th>¼òÀú</th>
-                    <th>Í¶µİÊ±¼ä</th>
-                    <th>²Ù×÷</th>
+                    <th>èŒä½åç§°</th>
+                    <th>æ±‚èŒè€…å§“å</th>
+                    <th>ç®€å†</th>
+                    <th>æŠ•é€’æ—¶é—´</th>
+                    <th>æ“ä½œ</th>
                 </tr>
                 <tbody>
                 {% for delivery in pagination.items %}
@@ -70,27 +70,25 @@
                     <td>{{ delivery.created_at }}</td>
                     <td>{{ delivery.qualify.name}}</td>
                 </tr>
-                {% endif %}
                 {% endfor %}
                 </tbody>
             </thead>
         </table>
     </div>
     <div class="tab-pane" id="interviewlist">
-        <!--ÃæÊÔÁĞ±í-->
+        <!--é¢è¯•åˆ—è¡¨-->
         <table class="table text-nowrap">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Ö°Î»Ãû³Æ</th>
-                    <th>ÇóÖ°ÕßĞÕÃû</th>
-                    <th>¼òÀú</th>
-                    <th>Í¶µİÊ±¼ä</th>
-                    <th>²Ù×÷</th>
+                    <th>èŒä½åç§°</th>
+                    <th>æ±‚èŒè€…å§“å</th>
+                    <th>ç®€å†</th>
+                    <th>æŠ•é€’æ—¶é—´</th>
+                    <th>æ“ä½œ</th>
                 </tr>
                 <tbody>
                 {% for delivery in pagination.items %}
-                <tr>
                     <td>{{ delivery.id }}</td>
                     <td>{{ delivery.job.name }}</td>
                     <td>{{ delivery.user.name }}</td>
@@ -99,7 +97,6 @@
                     <td>{{ delivery.created_at }}</td>
                     <td>{{ delivery.qualify.name}}</td>
                 </tr>
-                {% endif %}
                 {% endfor %}
                 </tbody>
             </thead>
